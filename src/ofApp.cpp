@@ -4,7 +4,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	randomNumber();
+	randomizeNumber();
+	
 }
 
 //--------------------------------------------------------------
@@ -14,21 +15,99 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofSetColor(255, 255, 255);
+
 	for (int i = 0; i < circles.size(); i++) {
 		ofDrawCircle(200*i , 200, circles[i]);
 	}
+
+	ofSetColor(0);
+	for (int i = 0; i < circles.size(); i++) {
+		ofDrawBitmapString(circles[i], 200 * i , 200);
+
+	}	
+
+	text = "Information\n"
+		"\"r\" Pour randomiser les nombres\n"
+		"\"b\" Bubble Sort\n"
+		"\"i\" Insertion Sort\n"
+		"\"m\" Merge Sort\n"
+		"\"q\" Quick Sort\n"
+		"\"y\" Fisher-Yates shuffle\n"
+		"\t Le programme a execute: " + execute;
+	ofDrawBitmapString(text, 100, 600);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
+	//Pour Randomiser les nombres 
 	if (key == 'r') {
-		randomNumber();
+		execute = "Randomisation des nombres";
+
+		randomizeNumber();
 
 		for (int i = 0; i < circles.size(); i++) {
 			std::cout << circles[i] << std::endl;
 		}
 		std::cout << "\n";
+	}
+
+	//Bubble sort 
+	else if (key == 'b') {
+		execute = "Bubble sort";
+
+		for (int i = 0; i < circles.size() - 1; i++) {
+			for (int j = 0; j < circles.size() - i - 1; j++) {
+				if (circles[j] > circles[j + 1])
+				{
+					std::swap(circles[j], circles[j + 1]);
+				}
+			}
+		}
+	}
+
+	//Insertion sort
+	else if (key == 'i') {
+		execute = "Insertion sort";
+
+		int key, j;
+		for (int i = 1; i < circles.size(); i++) {
+			key = circles[i];
+			j = i - 1;
+
+			while (j >= 0 && circles[j] > key) {
+				circles[j + 1] = circles[j];
+				j--;
+				circles[j + 1] = key;
+			}
+		}
+	}
+
+	//Merge sort
+	else if (key == 'm') {
+		execute = "Merge sort";
+
+		mergeSort(circles, 0, circles.size() - 1);
+	}
+
+	//Quick sort
+	else if (key == 'q') {
+		execute = "Quick sort";
+
+		quickSort(circles, 0, circles.size() - 1);
+	}
+
+	//Fisher-Yates shuffle
+	else if (key == 'y') {
+		execute = "Fisher-Yatest";
+
+		std::srand(time(0));
+
+		for (int i = circles.size() - 1; i > 0; i--) {
+			int j = std::rand() % (i + 1);
+			swap(circles[i], circles[j]);
+		}
 	}
 }
 
@@ -82,13 +161,72 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-void ofApp::randomNumber() {
+void ofApp::randomizeNumber() {
 	circles.clear();
 
 	std::srand(time(0));
 	for (int i = 0; i < 5; i++) {
 		int n = 10 + std::rand() % 91;
 		circles.push_back(n);
+	}
+}
+
+void ofApp::merge(std::vector<int>& vector, int left, int mid, int right) {
+	std::vector<int> temp;
+	int i = left, j = mid + 1;
+
+	while (i <= mid && j <= right) {
+		if (vector[i] <= vector[j]) {
+			temp.push_back(vector[i++]);
+		}
+		else {
+			temp.push_back(vector[j++]);
+		}
+	}
+
+	while (i <= mid) {
+		temp.push_back(vector[i++]);
+	}
+	while (j < right) {
+		temp.push_back(vector[j++]);
+	}
+
+	for (int k = 0; k < temp.size(); k++) {
+		vector[left + k] = temp[k];
+	}
+}
+
+void ofApp::mergeSort(std::vector<int>& vector, int left, int right)
+{
+	if (left < right) {
+		int mid = left + (right - left) / 2;
+		
+		mergeSort(vector, left, mid);
+		mergeSort(vector, mid + 1, right);
+
+		merge(vector, left, mid, right);
+	}
+}
+
+int ofApp::partition(std::vector<int>& arr, int low, int high) {
+	int pivot = arr[high];
+	int i = low - 1;
+
+	for (int j = low; j < high; j++) {
+		if (arr[j] < pivot) {
+			i++;
+			std::swap(arr[i], arr[j]);
+		}
+	}
+	std::swap(arr[i + 1], arr[high]);
+	return i + 1;
+}
+
+void ofApp::quickSort(std::vector<int>& arr, int low, int high) {
+	if (low < high) {
+		int pi = partition(arr, low, high);
+		quickSort(arr, low, pi - 1);
+		quickSort(arr, pi + 1, high);
 	}
 }
 

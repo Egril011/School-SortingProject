@@ -5,15 +5,14 @@
 class ofApp : public ofBaseApp{
 	private:
 		vector<int> circles;
-
-
+		std::string text;
+		std::string execute;
 
 	public:
 		void setup();
 		void update();
 		void draw();
-		
-
+	
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -26,6 +25,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		void randomNumber();
+		void randomizeNumber();
+		void merge(std::vector<int>& vector, int left, int mid, int right);
+		void mergeSort(std::vector<int>& vector, int left, int right);
+		int partition(std::vector<int>& arr, int low, int high);
+		void quickSort(std::vector<int>& arr, int low, int high);
 		
 };
