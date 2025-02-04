@@ -33,7 +33,7 @@ void ofApp::draw(){
 		"\"i\" Insertion Sort\n"
 		"\"m\" Merge Sort\n"
 		"\"q\" Quick Sort\n"
-		"\"y\" Fisher-Yates shuffle\n"
+		"\"s\" Fisher-Yates shuffle\n"
 		"\t Le programme a execute: " + execute;
 	ofDrawBitmapString(text, 100, 600);
 }
@@ -94,7 +94,7 @@ void ofApp::keyPressed(int key){
 	}
 
 	//Fisher-Yates shuffle
-	else if (key == 'y') {
+	else if (key == 's') {
 		execute = "Fisher-Yatest";
 
 		std::srand(time(0));
