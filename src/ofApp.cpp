@@ -4,8 +4,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	ofBackground(0);
 	randomizeNumber();
-	
 }
 
 //--------------------------------------------------------------
@@ -15,19 +15,25 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofSetColor(255, 255, 255);
 
+	//Dessiner les cercles
+	ofSetColor(255, 255, 255);
+	int xPos = 1;
 	for (int i = 0; i < circles.size(); i++) {
-		ofDrawCircle(200*i , 200, circles[i]);
+		ofDrawCircle(180*xPos, 200, circles[i]);
+		xPos++;
 	}
 
+	//Ecrire le radius des circles
 	ofSetColor(0);
+	xPos = 1;
 	for (int i = 0; i < circles.size(); i++) {
-		ofDrawBitmapString(circles[i], 200 * i , 200);
-
+		ofDrawBitmapString(circles[i], 180 * xPos - 10, 200);
+		xPos++;
 	}	
 
-	text = "Informations\n"
+	ofSetColor(255);
+	text = "Informations:\n"
 		"\"r\" Pour randomiser les nombres\n"
 		"\"b\" Bubble Sort\n"
 		"\"i\" Insertion Sort\n"
@@ -94,6 +100,8 @@ void ofApp::keyPressed(int key){
 	}
 
 	//Fisher-Yates shuffle
+	//J'ai regarde comment faire pour faire ce tri: 
+	// https://www.geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/
 	else if (key == 's') {
 		execute = "Fisher-Yatest";
 
@@ -167,6 +175,8 @@ void ofApp::randomizeNumber() {
 }
 
 void ofApp::merge(std::vector<int>& vector, int left, int mid, int right) {
+	//Je me suis a ide des notes decours quand j'avais un blanc memoire
+
 	std::vector<int> temp;
 	int i = left, j = mid + 1;
 
@@ -204,6 +214,8 @@ void ofApp::mergeSort(std::vector<int>& vector, int left, int right)
 }
 
 int ofApp::partition(std::vector<int>& arr, int low, int high) {
+	//Je me suis aide des notes de cours quand j'avais un blanc memoire
+
 	int pivot = arr[high];
 	int i = low - 1;
 
