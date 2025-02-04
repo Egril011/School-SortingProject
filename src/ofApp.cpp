@@ -27,7 +27,7 @@ void ofApp::draw(){
 
 	}	
 
-	text = "Information\n"
+	text = "Informations\n"
 		"\"r\" Pour randomiser les nombres\n"
 		"\"b\" Bubble Sort\n"
 		"\"i\" Insertion Sort\n"
@@ -46,11 +46,6 @@ void ofApp::keyPressed(int key){
 		execute = "Randomisation des nombres";
 
 		randomizeNumber();
-
-		for (int i = 0; i < circles.size(); i++) {
-			std::cout << circles[i] << std::endl;
-		}
-		std::cout << "\n";
 	}
 
 	//Bubble sort 
@@ -187,7 +182,7 @@ void ofApp::merge(std::vector<int>& vector, int left, int mid, int right) {
 	while (i <= mid) {
 		temp.push_back(vector[i++]);
 	}
-	while (j < right) {
+	while (j <= right) {
 		temp.push_back(vector[j++]);
 	}
 
