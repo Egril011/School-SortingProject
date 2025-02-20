@@ -236,4 +236,3 @@ void ofApp::quickSort(std::vector<int>& arr, int low, int high) {
 		quickSort(arr, pi + 1, high);
 	}
 }
-
